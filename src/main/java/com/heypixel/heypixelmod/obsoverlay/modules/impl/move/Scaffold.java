@@ -49,61 +49,61 @@ import net.minecraft.world.phys.HitResult.Type;
 import org.apache.commons.lang3.RandomUtils;
 
 @ModuleInfo(
-   name = "Scaffold",
-   description = "Automatically places blocks under you",
-   category = Category.MOVEMENT
+        name = "Scaffold",
+        description = "Automatically places blocks under you",
+        category = Category.MOVEMENT
 )
 public class Scaffold extends Module {
    public static final List<Block> blacklistedBlocks = Arrays.asList(
-      Blocks.AIR,
-      Blocks.WATER,
-      Blocks.LAVA,
-      Blocks.ENCHANTING_TABLE,
-      Blocks.GLASS_PANE,
-      Blocks.GLASS_PANE,
-      Blocks.IRON_BARS,
-      Blocks.SNOW,
-      Blocks.COAL_ORE,
-      Blocks.DIAMOND_ORE,
-      Blocks.EMERALD_ORE,
-      Blocks.CHEST,
-      Blocks.TRAPPED_CHEST,
-      Blocks.TORCH,
-      Blocks.ANVIL,
-      Blocks.TRAPPED_CHEST,
-      Blocks.NOTE_BLOCK,
-      Blocks.JUKEBOX,
-      Blocks.TNT,
-      Blocks.GOLD_ORE,
-      Blocks.IRON_ORE,
-      Blocks.LAPIS_ORE,
-      Blocks.STONE_PRESSURE_PLATE,
-      Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE,
-      Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE,
-      Blocks.STONE_BUTTON,
-      Blocks.LEVER,
-      Blocks.TALL_GRASS,
-      Blocks.TRIPWIRE,
-      Blocks.TRIPWIRE_HOOK,
-      Blocks.RAIL,
-      Blocks.CORNFLOWER,
-      Blocks.RED_MUSHROOM,
-      Blocks.BROWN_MUSHROOM,
-      Blocks.VINE,
-      Blocks.SUNFLOWER,
-      Blocks.LADDER,
-      Blocks.FURNACE,
-      Blocks.SAND,
-      Blocks.CACTUS,
-      Blocks.DISPENSER,
-      Blocks.DROPPER,
-      Blocks.CRAFTING_TABLE,
-      Blocks.COBWEB,
-      Blocks.PUMPKIN,
-      Blocks.COBBLESTONE_WALL,
-      Blocks.OAK_FENCE,
-      Blocks.REDSTONE_TORCH,
-      Blocks.FLOWER_POT
+           Blocks.AIR,
+           Blocks.WATER,
+           Blocks.LAVA,
+           Blocks.ENCHANTING_TABLE,
+           Blocks.GLASS_PANE,
+           Blocks.GLASS_PANE,
+           Blocks.IRON_BARS,
+           Blocks.SNOW,
+           Blocks.COAL_ORE,
+           Blocks.DIAMOND_ORE,
+           Blocks.EMERALD_ORE,
+           Blocks.CHEST,
+           Blocks.TRAPPED_CHEST,
+           Blocks.TORCH,
+           Blocks.ANVIL,
+           Blocks.TRAPPED_CHEST,
+           Blocks.NOTE_BLOCK,
+           Blocks.JUKEBOX,
+           Blocks.TNT,
+           Blocks.GOLD_ORE,
+           Blocks.IRON_ORE,
+           Blocks.LAPIS_ORE,
+           Blocks.STONE_PRESSURE_PLATE,
+           Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE,
+           Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE,
+           Blocks.STONE_BUTTON,
+           Blocks.LEVER,
+           Blocks.TALL_GRASS,
+           Blocks.TRIPWIRE,
+           Blocks.TRIPWIRE_HOOK,
+           Blocks.RAIL,
+           Blocks.CORNFLOWER,
+           Blocks.RED_MUSHROOM,
+           Blocks.BROWN_MUSHROOM,
+           Blocks.VINE,
+           Blocks.SUNFLOWER,
+           Blocks.LADDER,
+           Blocks.FURNACE,
+           Blocks.SAND,
+           Blocks.CACTUS,
+           Blocks.DISPENSER,
+           Blocks.DROPPER,
+           Blocks.CRAFTING_TABLE,
+           Blocks.COBWEB,
+           Blocks.PUMPKIN,
+           Blocks.COBBLESTONE_WALL,
+           Blocks.OAK_FENCE,
+           Blocks.REDSTONE_TORCH,
+           Blocks.FLOWER_POT
    );
    public Vector2f correctRotation = new Vector2f();
    public Vector2f rots = new Vector2f();
@@ -111,31 +111,31 @@ public class Scaffold extends Module {
    private int offGroundTicks = 0;
    public ModeValue mode = ValueBuilder.create(this, "Mode").setDefaultModeIndex(0).setModes("Normal", "Telly Bridge", "Keep Y").build().getModeValue();
    public BooleanValue eagle = ValueBuilder.create(this, "Eagle")
-      .setDefaultBooleanValue(true)
-      .setVisibility(() -> this.mode.isCurrentMode("Normal"))
-      .build()
-      .getBooleanValue();
+           .setDefaultBooleanValue(true)
+           .setVisibility(() -> this.mode.isCurrentMode("Normal"))
+           .build()
+           .getBooleanValue();
    public BooleanValue sneak = ValueBuilder.create(this, "Sneak").setDefaultBooleanValue(true).build().getBooleanValue();
    public BooleanValue snap = ValueBuilder.create(this, "Snap")
-      .setDefaultBooleanValue(true)
-      .setVisibility(() -> this.mode.isCurrentMode("Normal"))
-      .build()
-      .getBooleanValue();
+           .setDefaultBooleanValue(true)
+           .setVisibility(() -> this.mode.isCurrentMode("Normal"))
+           .build()
+           .getBooleanValue();
    public BooleanValue hideSnap = ValueBuilder.create(this, "Hide Snap Rotation")
-      .setDefaultBooleanValue(true)
-      .setVisibility(() -> this.mode.isCurrentMode("Normal") && this.snap.getCurrentValue())
-      .build()
-      .getBooleanValue();
+           .setDefaultBooleanValue(true)
+           .setVisibility(() -> this.mode.isCurrentMode("Normal") && this.snap.getCurrentValue())
+           .build()
+           .getBooleanValue();
    public BooleanValue renderItemSpoof = ValueBuilder.create(this, "Render Item Spoof").setDefaultBooleanValue(true).build().getBooleanValue();
    public BooleanValue keepFoV = ValueBuilder.create(this, "Keep FoV").setDefaultBooleanValue(true).build().getBooleanValue();
    FloatValue fov = ValueBuilder.create(this, "FoV")
-      .setDefaultFloatValue(1.15F)
-      .setMaxFloatValue(2.0F)
-      .setMinFloatValue(1.0F)
-      .setFloatStep(0.05F)
-      .setVisibility(() -> this.keepFoV.getCurrentValue())
-      .build()
-      .getFloatValue();
+           .setDefaultFloatValue(1.15F)
+           .setMaxFloatValue(2.0F)
+           .setMinFloatValue(1.0F)
+           .setFloatStep(0.05F)
+           .setVisibility(() -> this.keepFoV.getCurrentValue())
+           .build()
+           .getFloatValue();
    int oldSlot;
    private Scaffold.BlockPosWithFacing pos;
    private int lastSneakTicks;
@@ -171,9 +171,9 @@ public class Scaffold extends Module {
 
    public static boolean isOnBlockEdge(float sensitivity) {
       return !mc.level
-         .getCollisions(mc.player, mc.player.getBoundingBox().move(0.0, -0.5, 0.0).inflate((double)(-sensitivity), 0.0, (double)(-sensitivity)))
-         .iterator()
-         .hasNext();
+              .getCollisions(mc.player, mc.player.getBoundingBox().move(0.0, -0.5, 0.0).inflate((double)(-sensitivity), 0.0, (double)(-sensitivity)))
+              .iterator()
+              .hasNext();
    }
 
    @EventTarget
@@ -236,11 +236,11 @@ public class Scaffold extends Module {
 
          boolean isHoldingJump = InputConstants.isKeyDown(mc.getWindow().getWindow(), mc.options.keyJump.getKey().getValue());
          if (this.baseY == -1
-            || this.baseY > (int)Math.floor(mc.player.getY()) - 1
-            || mc.player.onGround()
-            || !PlayerUtils.movementInput()
-            || isHoldingJump
-            || this.mode.isCurrentMode("Normal")) {
+                 || this.baseY > (int)Math.floor(mc.player.getY()) - 1
+                 || mc.player.onGround()
+                 || !PlayerUtils.movementInput()
+                 || isHoldingJump
+                 || this.mode.isCurrentMode("Normal")) {
             this.baseY = (int)Math.floor(mc.player.getY()) - 1;
          }
 
@@ -325,7 +325,7 @@ public class Scaffold extends Module {
    private boolean checkPlace(Scaffold.BlockPosWithFacing data) {
       Vec3 center = new Vec3((double)data.position.getX() + 0.5, (double)((float)data.position.getY() + 0.5F), (double)data.position.getZ() + 0.5);
       Vec3 hit = center.add(
-         new Vec3((double)data.facing.getNormal().getX() * 0.5, (double)data.facing.getNormal().getY() * 0.5, (double)data.facing.getNormal().getZ() * 0.5)
+              new Vec3((double)data.facing.getNormal().getX() * 0.5, (double)data.facing.getNormal().getY() * 0.5, (double)data.facing.getNormal().getZ() * 0.5)
       );
       Vec3 relevant = hit.subtract(mc.player.getEyePosition());
       return relevant.lengthSqr() <= 20.25 && relevant.normalize().dot(Vec3.atLowerCornerOf(data.facing.getNormal().multiply(-1)).normalize()) >= 0.0;
@@ -336,10 +336,10 @@ public class Scaffold extends Module {
          Direction sbFace = this.pos.facing();
          boolean isHoldingJump = InputConstants.isKeyDown(mc.getWindow().getWindow(), mc.options.keyJump.getKey().getValue());
          if (sbFace != null
-            && (sbFace != Direction.UP || mc.player.onGround() || !PlayerUtils.movementInput() || isHoldingJump || this.mode.isCurrentMode("Normal"))
-            && this.shouldBuild()) {
+                 && (sbFace != Direction.UP || mc.player.onGround() || !PlayerUtils.movementInput() || isHoldingJump || this.mode.isCurrentMode("Normal"))
+                 && this.shouldBuild()) {
             InteractionResult result = mc.gameMode
-               .useItemOn(mc.player, InteractionHand.MAIN_HAND, new BlockHitResult(getVec3(this.pos.position(), sbFace), sbFace, this.pos.position(), false));
+                    .useItemOn(mc.player, InteractionHand.MAIN_HAND, new BlockHitResult(getVec3(this.pos.position(), sbFace), sbFace, this.pos.position(), false));
             if (result == InteractionResult.SUCCESS) {
                mc.player.swing(InteractionHand.MAIN_HAND);
                this.pos = null;
@@ -352,8 +352,8 @@ public class Scaffold extends Module {
    @ParameterObfuscationExclude
    private Vector2f getPlayerYawRotation() {
       return mc.player != null && this.pos != null
-         ? new Vector2f(RotationUtils.getRotations(this.pos.position(), 0.0F).getYaw(), RotationUtils.getRotations(this.pos.position(), 0.0F).getPitch())
-         : new Vector2f(0.0F, 0.0F);
+              ? new Vector2f(RotationUtils.getRotations(this.pos.position(), 0.0F).getYaw(), RotationUtils.getRotations(this.pos.position(), 0.0F).getPitch())
+              : new Vector2f(0.0F, 0.0F);
    }
 
    private boolean shouldBuild() {
@@ -407,7 +407,7 @@ public class Scaffold extends Module {
 
          for (Direction sbface : Direction.values()) {
             Vec3 hit = center.add(
-               new Vec3((double)sbface.getNormal().getX() * 0.5, (double)sbface.getNormal().getY() * 0.5, (double)sbface.getNormal().getZ() * 0.5)
+                    new Vec3((double)sbface.getNormal().getX() * 0.5, (double)sbface.getNormal().getY() * 0.5, (double)sbface.getNormal().getZ() * 0.5)
             );
             Vec3i baseBlock = bp.offset(sbface.getNormal());
             BlockPos po = new BlockPos(baseBlock.getX(), baseBlock.getY(), baseBlock.getZ());

@@ -131,6 +131,7 @@ public class Aura extends Module {
       .build()
       .getFloatValue();
    ModeValue priority = ValueBuilder.create(this, "Priority").setModes("Health", "FoV", "Range", "None").build().getModeValue();
+   
    RotationUtils.Data lastRotationData;
    RotationUtils.Data rotationData;
    int attackTimes = 0;
@@ -470,3 +471,5 @@ public class Aura extends Module {
          : possibleTargets.subList(0, (int)Math.min((float)possibleTargets.size(), this.switchSize.getCurrentValue()));
    }
 }
+
+
